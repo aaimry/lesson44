@@ -12,7 +12,7 @@ def index_view(request):
 
         context = {
             'numbers': request.POST.get('numbers').split(),
-            'secret_numbers': ['1', '2', '3', '4'],
+            'secret_numbers': ['1', '5', '3', '4'],
             'bulls': 0,
             'cows': 0,
             'result': None
@@ -26,7 +26,6 @@ def index_view(request):
             if i > 9 or i < 1:
                 context['result'] = 'Numbers must be greater than 1 and less than 10!'
                 game_score.append(context['result'])
-
         for i in range(len(context['secret_numbers'])):
             if context['secret_numbers'][i] == context['numbers'][i]:
                 context['bulls'] += 1
@@ -50,7 +49,7 @@ def score_view(request):
         'step': 1
     }
     if request.method == 'POST':
-        context['step'] += 1
         for i in context['score']:
-            return i
+            context['step'] += 1
+            return context['step'], i
     return render(request, 'score.html', context)
